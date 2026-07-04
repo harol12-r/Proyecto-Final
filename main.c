@@ -1,5 +1,6 @@
 #include <stdio.h>
-
-int main (int argc, char *argv[]) {
+#include <stdlib.h>
+#include "producto.h"
+int main(){
     return 0;
 }
