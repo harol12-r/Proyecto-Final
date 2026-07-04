@@ -12,3 +12,5 @@ typedef struct
     float precio_venta;
     int cantidad;
 }Poducto;
+void limpiar_buffer();
+void quitar_nueva_linea(char *cadena);
