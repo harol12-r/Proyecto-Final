@@ -20,3 +20,75 @@ void quitar_nueva_linea(char *cadena){
     }
     
 }
+int verificar_codigo_unico(const Producto *inventario, int total, const char *codigo){
+for (int i= 0; i < total; i++)
+{
+    if (strcmp ((inventario+i)->codigo, codigo)==0)
+    {
+        return 0;
+    }
+    
+}
+return 1;
+}
+void registrar_producto(Producto *inventario, int *total){
+    if (*total>= MAX_PRODUCTOS)
+    {
+        printf ("\n [Error] El inventario esta lleno. \n");
+        return;
+    }
+    Producto nuevo;
+    printf("\n --- REGISTRAR PRODUCTO ---\n");
+    do
+    {
+        printf("Codigo (1-15 carac.):");
+        fgets(nuevo.codigo, sizeof(nuevo.codigo), stdin);
+        quitar_nueva_linea(nuevo.codigo);
+        if (*(nuevo.codigo)==  '\0 ')
+        {
+            printf("[ERROR] El codigo no puede estar vacio.\n");
+            continue;
+        }
+        if (verificar_codigo_unico(inventario, *total, nuevo.codigo))
+        {
+            printf("[ERROR] El codigo ya esta registrado.\n");
+        }
+        
+        break;
+    } while (1);
+    printf("Nombre:");
+    fgets(nuevo.nombre, sizeof (nuevo.nombre), stdin);
+    quitar_nueva_linea(nuevo.categoria);
+    do
+    {
+        printf("Precio de compra(>0): ");
+        if (scanf("%f", &nuevo.precio_compra)!=1 || nuevo.precio_compra <=0)
+        {
+            printf("[ERROR] Ingrese un precio valido.\n");
+            limpiar_buffer();
+        }
+        else
+        {
+            break;
+        }
+        
+    } while (1);
+    do
+    {
+        printf("Cantidad: (>=0): ");
+        if (scanf("%d", &nuevo.cantidad)!=1||nuevo.cantidad<0)
+        {
+            printf("[ERROR] Ingrese una cantidad valida");
+            limpiar_buffer();
+        }
+        else
+        {
+            break;
+        }
+        
+    } while (1);
+    limpiar_buffer();
+    *(inventario + *total)= nuevo;
+    (*total)++;
+    printf("\nProducto registrado con exito\n");
+}
