@@ -92,3 +92,21 @@ void registrar_producto(Producto *inventario, int *total){
     (*total)++;
     printf("\nProducto registrado con exito\n");
 }
+void listar_productos(const Producto *inventario, int total)
+{
+if (total == 0)
+{
+    printf("\n No hay productos en el inventario. \n");
+    return;
+}
+printf("\n%-10s %-15s %-15s %-10s %-10s %-10s %-10s \n", "CODIGO", "NOMBRE", "CATEGORIA", "P. VENTA", "P. VENTA", "CANTIDAD", "UTILIDAD");
+printf("------------------------------------------------------------------------------------------------------------------------------\n");
+for (int i = 0; i < total; i++)
+{
+    const Producto *p = inventario + i;
+    float utilidad = (p->precio_venta - p->precio_compra) * p->cantidad;
+    printf("\n%-10s %-15s %-15s %-10.2s %-10.2s %-10s %-10.2s \n", p->codigo, p->nombre, p->categoria, p->precio_compra, p->precio_venta, p->cantidad, utilidad);
+
+}
+
+}

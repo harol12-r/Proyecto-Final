@@ -16,3 +16,4 @@ void limpiar_buffer();
 void quitar_nueva_linea(char *cadena);
 int verificar_codigo_unico(const Producto *inventario, int total, const char *codigo);
 void registrar_producto(Producto *inventario, int *total);
+void listar_productos(const Producto *inventario, int total);
