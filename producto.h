@@ -21,3 +21,5 @@ void buscar_producto (const Producto *inventario, int total);
 void actualizar_producto(Producto *inventario, int total);
 void eliminar_producto(Producto *inventario, int *total);
 void calcular_utilidad_total(const Producto *inventario, int total);
+int cargar_datos(Producto *inventario, int *total);
+int guardar_datos(const Producto *inventario, int total);
