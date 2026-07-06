@@ -49,7 +49,7 @@ void registrar_producto(Producto *inventario, int *total){
             printf("[ERROR] El codigo no puede estar vacio.\n");
             continue;
         }
-        if (verificar_codigo_unico(inventario, *total, nuevo.codigo))
+        if (verificar_codigo_unico(inventario, *total, nuevo.codigo) == 0)
         {
             printf("[ERROR] El codigo ya esta registrado.\n");
         }
@@ -58,7 +58,12 @@ void registrar_producto(Producto *inventario, int *total){
     } while (1);
     printf("Nombre:");
     fgets(nuevo.nombre, sizeof (nuevo.nombre), stdin);
+    quitar_nueva_linea(nuevo.nombre);
+
+    printf("Categoria: ");
+    fgets(nuevo.categoria, sizeof(nuevo.categoria), stdin);
     quitar_nueva_linea(nuevo.categoria);
+
     do
     {
         printf("Precio de compra(>0): ");
@@ -88,6 +93,7 @@ void registrar_producto(Producto *inventario, int *total){
         
     } while (1);
     limpiar_buffer();
+    nuevo.precio_venta = nuevo.precio_compra * 1.25;
     *(inventario + *total)= nuevo;
     (*total)++;
     printf("\nProducto registrado con exito\n");
@@ -105,7 +111,7 @@ for (int i = 0; i < total; i++)
 {
     const Producto *p = inventario + i;
     float utilidad = (p->precio_venta - p->precio_compra) * p->cantidad;
-    printf("\n%-10s %-15s %-15s %-10.2s %-10.2s %-10s %-10.2s \n", p->codigo, p->nombre, p->categoria, p->precio_compra, p->precio_venta, p->cantidad, utilidad);
+   printf("%-10s %-15s %-15s %-10.2f %-10.2f %-10d %-10.2f\n", p->codigo, p->nombre, p->categoria, p->precio_compra, p->precio_venta, p->cantidad, utilidad);
 
 }
 
@@ -233,14 +239,14 @@ int cargar_datos(Producto *inventario, int *total){
     fgets(cabecera, sizeof(cabecera), archivo);
 
     *total=0;
-    while (*total<MAX_PRODUCTOS &&
-    fscanf(archivo, "%15[[^,], %49[^,], %29[^,], %f, %f, %d\n",
-    (inventario +*total)->codigo,
-      (inventario + *total)->nombre,
-    (inventario+*total)->categoria,
+    while (*total < MAX_PRODUCTOS &&
+    fscanf(archivo, "%15[^,], %49[^,], %29[^,], %f, %f, %d\n",
+    (inventario + *total)->codigo,
+    (inventario + *total)->nombre,
+    (inventario + *total)->categoria,
     &(inventario + *total)->precio_compra,
     &(inventario + *total)->precio_venta,
-    &(inventario + *total)->cantidad)==6)
+    &(inventario + *total)->cantidad) == 6)
     {
         (*total)++;
     }
@@ -249,7 +255,7 @@ int cargar_datos(Producto *inventario, int *total){
 }
 int guardar_datos(const Producto *inventario, int total){
     FILE *archivo = fopen(ARCHIVO_DEFAULT, "w");
-    if (archivo) return 0;
+    if (!archivo) return 0;
     
     fprintf(archivo, "codigo, nombre, categoria, precio_compra, precio_venta, cantidad\n ");
 

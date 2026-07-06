@@ -26,12 +26,13 @@ int main(){
         printf("8. Salir (Autoguardado)\n");
         printf("SELECCIONE UNA OPCION: ");
 
-        if (scanf("&d", opcion)!=1)
+        if (scanf("%d", &opcion)!=1)
         {
-            limpiar_buffer();
+           
             opcion = 0;
             continue;
         }
+         limpiar_buffer();
         switch (opcion)
         {
         case 1: registrar_producto(inventario, &total_productos); break;
@@ -43,6 +44,10 @@ int main(){
         case 7:
         if (guardar_datos(inventario, total_productos)) printf("Guardado Exitoso. \n");
             break;
+        case 8:
+                guardar_datos(inventario, total_productos);
+                printf("Saliendo de la aplicacion de forma segura.\n");
+                break;
         }
         
     } while (opcion !=8);
