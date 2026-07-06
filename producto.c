@@ -110,3 +110,44 @@ for (int i = 0; i < total; i++)
 }
 
 }
+void buscar_producto (const Producto *inventario, int total){
+    if (total==0){
+        printf("\n No hay productos registrados.\n");
+        return;
+    }
+    char criterio[50];
+    printf("\n Ingrese el codigo o inicio del nombre a buscar: ");
+    fgets(criterio, sizeof(criterio), stdin);
+    quitar_nueva_linea(criterio);
+    int encontrados = 0;
+   for (int i = 0; i < total; i++) {
+        const Producto *p = inventario + i;
+        
+        int coincide = (strcmp(p->codigo, criterio) == 0);
+        
+    
+        if (!coincide) {
+            int j = 0;
+            coincide = 1;
+            while (*(criterio + j) != '\0') {
+                if (*(p->nombre + j) != *(criterio + j)) {
+                    coincide = 0;
+                    break;
+                }
+                j++;
+            }
+        }
+
+if (coincide) {
+            if (encontrados == 0) {
+                printf("\n%-10s %-15s %-15s %-10s %-10s %-10s\n", "CODIGO", "NOMBRE", "CATEGORIA", "P. COMPRA", "P. VENTA", "CANTIDAD");
+            }
+            printf("%-10s %-15s %-15s %-10.2f %-10.2f %-10d\n", p->codigo, p->nombre, p->categoria, p->precio_compra, p->precio_venta, p->cantidad);
+            encontrados++;
+        }
+    }
+
+    if (encontrados == 0) {
+        printf("No se encontraron coincidencias.\n");
+    }
+}
