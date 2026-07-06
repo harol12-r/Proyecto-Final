@@ -10,11 +10,11 @@ void limpiar_buffer(){
 }
 void quitar_nueva_linea(char *cadena){
     int i= 0;
-    while (*(cadena+i) !=  '\0 ')
+    while (*(cadena+i) !=  '\0')
     {
-        if (*(cadena+i)==  '\n ')
+        if (*(cadena+i)==  '\n')
         {
-            *(cadena+i)=  '\0 ';
+            *(cadena+i)=  '\0';
         }
         i++;
     }
@@ -44,7 +44,7 @@ void registrar_producto(Producto *inventario, int *total){
         printf("Codigo (1-15 carac.):");
         fgets(nuevo.codigo, sizeof(nuevo.codigo), stdin);
         quitar_nueva_linea(nuevo.codigo);
-        if (*(nuevo.codigo)==  '\0 ')
+        if (*(nuevo.codigo)==  '\0')
         {
             printf("[ERROR] El codigo no puede estar vacio.\n");
             continue;
@@ -187,7 +187,7 @@ void eliminar_producto(Producto *inventario, int *total){
     fgets(codigo, sizeof(codigo), stdin);
     quitar_nueva_linea(codigo);
     int indice=-1;
-    for (int i = 0; i < total; i++)
+    for (int i = 0; i < *total; i++)
     {
     if (strcmp((inventario+i)->codigo, codigo)==0)
     {
