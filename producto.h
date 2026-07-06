@@ -18,3 +18,6 @@ int verificar_codigo_unico(const Producto *inventario, int total, const char *co
 void registrar_producto(Producto *inventario, int *total);
 void listar_productos(const Producto *inventario, int total);
 void buscar_producto (const Producto *inventario, int total);
+void actualizar_producto(Producto *inventario, int total);
+void eliminar_producto(Producto *inventario, int *total);
+void calcular_utilidad_total(const Producto *inventario, int total);

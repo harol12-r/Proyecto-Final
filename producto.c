@@ -151,3 +151,77 @@ if (coincide) {
         printf("No se encontraron coincidencias.\n");
     }
 }
+void actualizar_producto(Producto *inventario, int total){
+    char codigo[LONG_CODIGO];
+    printf("\n Ingrese el codigo del producto a modificar: ");
+    fgets(codigo, sizeof(codigo), stdin);
+    quitar_nueva_linea(codigo);
+    int indice=-1;
+    for (int i = 0; i < total; i++)
+    {
+    if (strcmp((inventario+i)->codigo, codigo)==0)
+    {
+        indice=i;
+        break;
+    }
+    
+    }
+    if (indice==-1)
+    {
+        printf("[ERROR] El producto no existe.\n");
+        return;
+    }
+    Producto *p = inventario + indice;
+    printf("Nuevo Nombre: ");
+    fgets(p->nombre, sizeof(p->nombre), stdin);
+    quitar_nueva_linea(p->nombre);
+
+    printf("Nueva categoria: ");
+    fgets(p->categoria, sizeof(p->categoria), stdin);
+    quitar_nueva_linea(p->categoria);
+    
+}
+void eliminar_producto(Producto *inventario, int *total){
+    char codigo[LONG_CODIGO];
+    printf("\nIngrese el codigo a eliminar: ");
+    fgets(codigo, sizeof(codigo), stdin);
+    quitar_nueva_linea(codigo);
+    int indice=-1;
+    for (int i = 0; i < total; i++)
+    {
+    if (strcmp((inventario+i)->codigo, codigo)==0)
+    {
+      indice=i;
+      break;
+    }
+    
+    }
+    if (indice==-1)
+    {
+      printf("[ERROR] El codigo no existe. \n");
+      return;
+    }
+    char conf;
+    printf("¿Seguro que desea eliminar %s? (s/n): ", (inventario + indice)->nombre);
+    scanf("%c", &conf);
+    limpiar_buffer();
+    if (conf=='s'||conf=='S')
+    {
+        for (int i = indice; i < *total-1; i++)
+        {
+            *(inventario+i)=*(inventario+i+1);
+        }
+    (*total)--;
+    printf("Producto Eliminado.\n");
+    }
+    
+}
+void calcular_utilidad_total(const Producto *inventario, int total){
+  float suma=0;
+  for (int i = 0; i < total; i++)
+  {
+    const Producto *p=inventario +i;
+    suma += (p->precio_venta - p->precio_compra)* p->cantidad;
+  }
+  printf("\nUTILIDAD TOTAL: $%.2f\n", suma);  
+}
